@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Greeting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #d92323;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #ffe4e1;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: scaleIn 0.4s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            font-size: 1.8em;
+            color: #d92323;
+            margin-bottom: 10px;
+        }
+
+        .modal-message {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .modal-footer {
+            margin-top: 15px;
+            font-style: italic;
+            color: #666;
+        }
+
+        #error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Greeting Page</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="greetButton">Greet Me</button>
+
+    <p id="error"></p>
+
+    <div class="modal" id="greetingModal">
+        <div class="modal-content">
+            <div class="modal-header">Hello, <span id="modalName"></span>!</div>
+            <div class="modal-message">Welcome! Thank you for using our app.</div>
+            <div class="modal-footer">- Your friendly developer</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('greetButton').addEventListener('click', function() {
+            const nameInput = document.getElementById('nameInput');
+            const error = document.getElementById('error');
+            const modal = document.getElementById('greetingModal');
+            const modalName = document.getElementById('modalName');
+
+            const name = nameInput.value.trim();
+
+            if (name === "") {
+                error.textContent = "Please enter your name.";
+                modal.classList.remove('show');
+            } else {
+                error.textContent = "";
+                modalName.textContent = name;
+                modal.classList.add('show');
+            }
+        });
+
+        document.getElementById('greetingModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
